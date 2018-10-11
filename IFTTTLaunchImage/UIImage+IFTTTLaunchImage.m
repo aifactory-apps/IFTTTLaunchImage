@@ -23,6 +23,7 @@ NSString * const kIFTTTDefaultLaunchImageSetName = @"LaunchImage";
     NSMutableString *imageName = [NSMutableString stringWithString:name];
     
     CGFloat height = CGRectGetHeight([UIScreen mainScreen].bounds);
+    CGFloat scale = [UIScreen mainScreen].scale;
     
     if ([[UIDevice currentDevice] IFTTTDeviceIsiPad]) {
         if ([[UIDevice currentDevice] IFTTTDeviceIsLandscape]) {
@@ -42,11 +43,32 @@ NSString * const kIFTTTDefaultLaunchImageSetName = @"LaunchImage";
         } else {
             [imageName appendString:@"-800-Portrait-736h"];
         }
+    } else if (height == 812.f || height == 375.f) {
+        if (scale == 3.0) {
+            if ([[UIDevice currentDevice] IFTTTDeviceIsLandscape]) {
+                [imageName appendString:@"-1100-Landscape-2436h"];
+            } else {
+                [imageName appendString:@"-1100-Portrait-2436h"];
+            }
+        } else {
+            if ([[UIDevice currentDevice] IFTTTDeviceIsLandscape]) {
+                [imageName appendString:@"-1200-Landscape-1792h"];
+            } else {
+                [imageName appendString:@"-1200-Portrait-1792h"];
+            }
+        }
+    } else if (height == 896.f || height == 414.f) {
+        if ([[UIDevice currentDevice] IFTTTDeviceIsLandscape]) {
+            [imageName appendString:@"-1200-Landscape-2688h"];
+        } else {
+            [imageName appendString:@"-1200-Portrait-2688h"];
+        }
     } else {
         [imageName appendString:@"-700"];
     }
-        
+    
     return [UIImage imageNamed:imageName];
 }
 
 @end
+
